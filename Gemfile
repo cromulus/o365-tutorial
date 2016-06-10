@@ -28,13 +28,15 @@ gem 'turbolinks', '~>5'
 gem 'jbuilder', '~> 2.5'
 
 # Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.7'
 
 # Use Unicorn as the app server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 group :development, :test do
   # Check version. byebug works with version 2.*, but not with 1.*
