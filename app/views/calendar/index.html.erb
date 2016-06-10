@@ -1,6 +1,9 @@
 <h1>My events</h1>
-token:<%= @token %>
+oauth_token:<%= @oauth_token %>
+</br>
 email: <%= @email %>
+</br>
+token: <%= @user.token %>
 <table>
   <tr>
     <th>Subject</th>
@@ -10,8 +13,8 @@ email: <%= @email %>
   <% @events.each do |event| %>
     <tr>
       <td><%= event['Subject'] %></td>
-      <td><%= event['Start'] %></td>
-      <td><%= event['End'] %></td>
+      <td><%= event['Start']['DateTime'] %></td>
+      <td><%= event['End']['DateTime'] %></td>
     </tr>
   <% end %>
 </table>

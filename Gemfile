@@ -34,6 +34,11 @@ gem 'bcrypt', '~> 3.1.7'
 # Use Unicorn as the app server
 gem 'unicorn'
 
+# simple token auth. the simplest
+gem 'has_secure_token'
+
+# for ical fun
+gem 'icalendar'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

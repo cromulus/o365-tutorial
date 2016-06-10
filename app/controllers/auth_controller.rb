@@ -7,9 +7,7 @@ class AuthController < ApplicationController
     session[:azure_token] = token.to_hash
     email = get_user_email token.token
     session[:user_email] = email
-
-
-    @user = User.find_or_create(email: email)
+    @user = User.find_or_create_by(email: email)
     @user.oauth_token = token.token
     @user.azure_token = token.to_hash.to_json
     @user.save
