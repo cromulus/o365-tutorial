@@ -8,7 +8,7 @@ The purpose of this guide is to walk through the process of creating a simple Ru
 
 This guide assumes:
 
-- That you already have Ruby on Rails installed and working on your development machine. 
+- That you already have Ruby on Rails installed and working on your development machine.
 - That you have an Office 365 tenant, with access to an account in that tenant **OR** an Outlook.com developer preview account.
 
 ## Create the app ##
@@ -41,7 +41,7 @@ Let's begin by replacing the default welcome page with a page of our own. To do 
       # Prevent CSRF attacks by raising an exception.
       # For APIs, you may want to use :null_session instead.
       protect_from_forgery with: :exception
-      
+
       def home
 		# Display the login link.
     	render html: '<a href="#">Log in and view my email</a>'.html_safe
@@ -79,7 +79,7 @@ Open the `.\o365-tutorial\app\helpers\auth_helper.rb` file. We'll start here by 
 ### Contents of the `.\o365-tutorial\app\helpers\auth_helper.rb` file ###
 
     module AuthHelper
-    
+
       # App's client ID. Register the app in Application Registration Portal to get this value.
       CLIENT_ID = '<YOUR APP ID HERE>'
       # App's client secret. Register the app in Application Registration Portal to get this value.
@@ -88,9 +88,9 @@ Open the `.\o365-tutorial\app\helpers\auth_helper.rb` file. We'll start here by 
 	  # Scopes required by the app
 	  SCOPES = [ 'openid',
 				 'https://outlook.office.com/mail.read' ]
-      
+
       REDIRECT_URI = 'http://localhost:3000/authorize' # Temporary!
-    
+
       # Generates the login URL for the app.
       def get_login_url
     	client = OAuth2::Client.new(CLIENT_ID,
@@ -98,7 +98,7 @@ Open the `.\o365-tutorial\app\helpers\auth_helper.rb` file. We'll start here by 
 	                                :site => 'https://login.microsoftonline.com',
 	                                :authorize_url => '/common/oauth2/v2.0/authorize',
 	                                :token_url => '/common/oauth2/v2.0/token')
-                                
+
     	login_url = client.auth_code.authorize_url(:redirect_uri => REDIRECT_URI, :scope => SCOPES.join(' '))
       end
     end
@@ -134,7 +134,7 @@ Now that we have actual values in the `get_login_url` function, let's put it to 
       # For APIs, you may want to use :null_session instead.
       protect_from_forgery with: :exception
       include AuthHelper
-      
+
       def home
     	# Display the login link.
     	login_url = get_login_url
@@ -177,7 +177,7 @@ The added line tells Rails that when a GET request comes in for `/authorize`, in
 #### Contents of the `.\o365-tutorial\app\controllers\auth_controller.rb` file ####
 
     class AuthController < ApplicationController
-    
+
       def gettoken
     	render text: params[:code]
       end
@@ -188,7 +188,7 @@ Let's make one last refinement before we try this new code. Now that we have a r
 #### Updated contents of the `.\o365-tutorial\app\helpers\auth_helper.rb` file ####
 
     module AuthHelper
-    
+
       # App's client ID. Register the app in Application Registration Portal to get this value.
       CLIENT_ID = '<YOUR APP ID HERE>'
       # App's client secret. Register the app in Application Registration Portal to get this value.
@@ -197,7 +197,7 @@ Let's make one last refinement before we try this new code. Now that we have a r
 	  # Scopes required by the app
 	  SCOPES = [ 'openid',
 				 'https://outlook.office.com/mail.read' ]
-    
+
       # Generates the login URL for the app.
       def get_login_url
     	client = OAuth2::Client.new(CLIENT_ID,
@@ -205,7 +205,7 @@ Let's make one last refinement before we try this new code. Now that we have a r
 	                                :site => "https://login.microsoftonline.com",
 	                                :authorize_url => "/common/oauth2/v2.0/authorize",
 	                                :token_url => "/common/oauth2/v2.0/token")
-                                
+
     	login_url = client.auth_code.authorize_url(:redirect_uri => authorize_url, :scope => SCOPES.join(' '))
       end
     end
@@ -223,7 +223,7 @@ Let's add another helper function to `auth_helper.rb` called `get_token_from_cod
                                   :site => 'https://login.microsoftonline.com',
                                   :authorize_url => '/common/oauth2/v2.0/authorize',
                                   :token_url => '/common/oauth2/v2.0/token')
-    
+
       token = client.auth_code.get_token(auth_code,
                                          :redirect_uri => authorize_url,
                                          :scope => SCOPES.join(' '))
@@ -244,7 +244,7 @@ Add a new function `get_email_from_id_token` to `auth_helper.rb`.
 	  token_parts = id_token.split('.')
 	  # Token content is in the second part
 	  encoded_token = token_parts[1]
-		
+
 	  # It's base64, but may not be padded
 	  # Fix padding so Base64 module can decode
 	  leftovers = token_parts[1].length.modulo(4)
@@ -253,13 +253,13 @@ Add a new function `get_email_from_id_token` to `auth_helper.rb`.
 	  elsif leftovers == 3
 	    encoded_token += '='
 	  end
-		
+
 	  # Base64 decode (urlsafe version)
 	  decoded_token = Base64.urlsafe_decode64(encoded_token)
-	
+
 	  # Load into a JSON object
 	  jwt = JSON.parse(decoded_token)
-	 
+
 	  # Email is in the 'preferred_username' field
 	  email = jwt['preferred_username']
 	end
@@ -269,7 +269,7 @@ Let's make sure that works. Modify the `gettoken` action in the `auth_controller
 #### Updated contents of the `.\o365-tutorial\app\controllers\auth_controller.rb` file ####
 
     class AuthController < ApplicationController
-    
+
       def gettoken
     	token = get_token_from_code params[:code]
 		email = get_email_from_id_token token.params['id_token']
@@ -331,9 +331,9 @@ Save the file, run `bundle install`, and restart the server. Now we're ready to 
 		    # Outputs to the console
 		    faraday.response :logger
 		    # Uses the default Net::HTTP adapter
-		    faraday.adapter  Faraday.default_adapter  
+		    faraday.adapter  Faraday.default_adapter
 	      end
-	      
+
 	      response = conn.get do |request|
 		    # Get messages from the inbox
 		    # Sort by ReceivedDateTime in descending orderby
@@ -343,7 +343,7 @@ Save the file, run `bundle install`, and restart the server. Now we're ready to 
 		    request.headers['Accept'] = 'application/json'
 		    request.headers['X-AnchorMailbox'] = email
 	      end
-	      
+
 		  # Assign the resulting value to the @messages
 		  # variable to make it available to the view template.
 	      @messages = JSON.parse(response.body)['value']
@@ -409,6 +409,17 @@ Save the changes and sign in to the app. You should now see a simple table of me
 ## Next Steps ##
 
 Now that you've created a working sample, you may want to learn more about the [capabilities of the Mail API](https://msdn.microsoft.com/office/office365/APi/mail-rest-operations). If your sample isn't working, and you want to compare, you can download the end result of this tutorial from [GitHub](https://github.com/jasonjoh/o365-tutorial).
+
+# first, we save users and produce an auth token
+
+# next we output ical feeds with the token
+
+# next we add an smtp and imap server:
+https://github.com/aarongough/mini-smtp-server
+https://github.com/y10k/rims
+
+
+then
 
 ## Copyright ##
 

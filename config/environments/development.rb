@@ -36,6 +36,7 @@ Rails.application.configure do
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
 
+  config.action_controller.default_url_options = { host: 'o365testing.ngrok.io' }
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end
