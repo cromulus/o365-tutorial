@@ -1,9 +1,11 @@
 <h1>My events</h1>
-oauth_token:<%= @oauth_token %>
+<!-- oauth_token:<%= @oauth_token %>
 </br>
 email: <%= @email %>
 </br>
 token: <%= @user.token %>
+-->
+Calendar url: <%= calendar_feed_url(token: @user.token) %>
 <table>
   <tr>
     <th>Subject</th>

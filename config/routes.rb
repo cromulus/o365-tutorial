@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   get 'contacts/index'
 
   get 'calendar/index'
-  get 'calendar/feed/:token', to: 'calendar#feed'
+  get 'calendar/feed/:token', to: 'calendar#feed', as: 'calendar_feed'
 
   get 'mail/index'
 
