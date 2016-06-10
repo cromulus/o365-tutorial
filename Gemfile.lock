@@ -192,7 +192,7 @@ DEPENDENCIES
   oauth2
   puma (~> 3.0)
   rails (~> 5.0.0)
-  sass-rails (~> 5.0)
+  sass-rails
   sqlite3
   turbolinks (~> 5)
   tzinfo-data
