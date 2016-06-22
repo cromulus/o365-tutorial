@@ -679,7 +679,8 @@ Now that you've created a working sample, you may want to learn more about the [
 # first, we save users and produce an auth token
 
 # next we output ical feeds with the token
-
+https://msdn.microsoft.com/en-us/office/office365/api/calendar-rest-operations#Getevents
+we want the fellowshipcal@robinhood and person's calendar
 # next we add an smtp and imap server:
 https://github.com/aarongough/mini-smtp-server
 https://github.com/y10k/rims

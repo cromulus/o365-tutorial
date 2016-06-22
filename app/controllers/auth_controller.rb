@@ -1,6 +1,6 @@
 # Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
 class AuthController < ApplicationController
-
+# this is an access token. We should replace it with a refresh token
   def gettoken
     token = get_token_from_code params[:code]
 
@@ -9,7 +9,7 @@ class AuthController < ApplicationController
     session[:user_email] = email
     @user = User.find_or_create_by(email: email)
     @user.oauth_token = token.token
-    @user.azure_token = token.to_hash.to_json
+    @user.refresh_token = token.refresh_token
     @user.save
     redirect_to calendar_index_url
   end
