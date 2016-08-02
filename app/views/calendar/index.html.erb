@@ -1,22 +1,10 @@
 <h1>My events</h1>
-<!-- oauth_token:<%= @oauth_token %>
+oauth_token:<%= @oauth_token %>
 </br>
 email: <%= @email %>
 </br>
 token: <%= @user.token %>
--->
+</br>
 Calendar url: <%= calendar_feed_url(token: @user.token) %>
-<table>
-  <tr>
-    <th>Subject</th>
-    <th>Start</th>
-    <th>End</th>
-  </tr>
-  <% @events.each do |event| %>
-    <tr>
-      <td><%= event['Subject'] %></td>
-      <td><%= event['Start']['DateTime'] %></td>
-      <td><%= event['End']['DateTime'] %></td>
-    </tr>
-  <% end %>
-</table>
+</br>
+event_count: <%= pp @events %>

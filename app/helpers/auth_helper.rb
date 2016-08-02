@@ -38,10 +38,13 @@ module AuthHelper
   end
 
   # Gets the current access token
-  def get_access_token
-    # Get the current token hash from session
-    token_hash = session[:azure_token]
-
+  def get_access_token(token=nil)
+    unless token
+      # Get the current token hash from session
+      token_hash = session[:azure_token]
+    else
+      token_hash = token
+    end
     client = OAuth2::Client.new(CLIENT_ID,
                                 CLIENT_SECRET,
                                 :site => 'https://login.microsoftonline.com',

@@ -3,15 +3,13 @@ class CalendarController < ApplicationController
   include AuthHelper
 
   def index
-    token = get_access_token
+    oauth_token = get_access_token
     email = session[:user_email]
-
     if oauth_token
       @user = User.find_by_email(email)
       @oauth_token = oauth_token
       @email = email
       @events = get_events(@oauth_token, @email)
-
     else
       # If no token, redirect to the root url so user
       # can sign in.
@@ -40,6 +38,7 @@ class CalendarController < ApplicationController
 
   # will fail because auth tokens are short lived. need a refresh token
   def get_events(oauth_token,email)
+
     # If a token is present in the session, get messages from the inbox
     conn = Faraday.new(url: 'https://outlook.office.com') do |faraday|
       # Outputs to the console
@@ -52,7 +51,7 @@ class CalendarController < ApplicationController
     start = (Time.current - 15.days).strftime('%FT%R')
     end_time = (Time.current + 60.days).strftime('%FT%R')
     url = "/api/v2.0/me/calendarview?startDateTime=#{start}&endDateTime=#{end_time}"
-    url = '/api/v2.0/me/calendars'
+    #url = '/api/v2.0/me/calendars'
     response = conn.get do |request|
       # Get events from the calendar
       # Sort by Start in ascending orderby
