@@ -8,7 +8,7 @@ class AuthController < ApplicationController
     email = get_user_email token.token
     session[:user_email] = email
     @user = User.find_or_create_by(email: email)
-    @user.oauth_token = token.token
+    @user.oauth_token = token.to_hash.to_json
     @user.refresh_token = token.refresh_token
     @user.save
     redirect_to calendar_index_url

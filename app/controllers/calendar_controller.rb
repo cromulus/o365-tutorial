@@ -20,7 +20,9 @@ class CalendarController < ApplicationController
   def feed
     @user = User.find_by_token(params[:token])
     redirect_to root_url unless @user
-    @events = get_events(@user.oauth_token, @user.email)
+    token_hash = JSON.parse(@user.oauth_token)
+    access_token = get_access_token(token_hash)
+    @events = get_events(access_token, @user.email)
     cal = Icalendar::Calendar.new
     @events.each do |event|
       cal.event do |e|
@@ -49,7 +51,7 @@ class CalendarController < ApplicationController
     # url = '/api/v2.0/Me/calendargroups'
     # url = '/api/v2.0/Me/Events?$orderby=Start/DateTime asc&$select=Subject,Start,End&$top=10'
     start = (Time.current - 15.days).strftime('%FT%R')
-    end_time = (Time.current + 60.days).strftime('%FT%R')
+    end_time = (Time.current + 120.days).strftime('%FT%R')
     url = "/api/v2.0/me/calendarview?startDateTime=#{start}&endDateTime=#{end_time}"
     #url = '/api/v2.0/me/calendars'
     response = conn.get do |request|
