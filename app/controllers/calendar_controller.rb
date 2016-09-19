@@ -7,9 +7,6 @@ class CalendarController < ApplicationController
     email = session[:user_email]
     if oauth_token
       @user = User.find_by_email(email)
-      #@oauth_token = oauth_token
-      #@email = email
-      #@events = get_events(@oauth_token, @email)
     else
       # If no token, redirect to the root url so user
       # can sign in.
