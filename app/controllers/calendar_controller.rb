@@ -22,9 +22,9 @@ class CalendarController < ApplicationController
     redirect_to root_url unless @user
     token_hash = JSON.parse(@user.oauth_token)
     access_token = get_access_token(token_hash)
-    @events = get_events(access_token, @user.email)
+    events = get_events(access_token, @user.email)
     cal = Icalendar::Calendar.new
-    @events.each do |event|
+    events.each do |event|
       cal.event do |e|
         start_time = Time.zone.parse(event['Start']['DateTime'])
         end_time = Time.zone.parse(event['End']['DateTime'])
@@ -38,9 +38,8 @@ class CalendarController < ApplicationController
     render text: cal.to_ical
   end
 
-  # will fail because auth tokens are short lived. need a refresh token
   def get_events(oauth_token,email)
-    @events = []
+    events = []
     # If a token is present in the session, get messages from the inbox
     conn = Faraday.new(url: 'https://outlook.office.com') do |faraday|
       # Outputs to the console
@@ -66,8 +65,9 @@ class CalendarController < ApplicationController
       end
       res  = JSON.parse(response.body)
       url = res["@odata.nextLink"] # is nil if there is no more to fetch
-      @events += res['value']
+      events += res['value']
     end
+    return events
   end
 
 end
