@@ -44,7 +44,7 @@ class CalendarController < ApplicationController
     # If a token is present in the session, get messages from the inbox
     conn = Faraday.new(url: 'https://outlook.office.com') do |faraday|
       # Outputs to the console
-      faraday.response :logger
+      # faraday.response :logger
       # Uses the default Net::HTTP adapter
       faraday.adapter  Faraday.default_adapter
     end
