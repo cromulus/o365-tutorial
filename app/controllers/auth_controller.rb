@@ -3,14 +3,16 @@ class AuthController < ApplicationController
 # this is an access token. We should replace it with a refresh token
   def gettoken
     token = get_token_from_code params[:code]
-
+    Rails.logger.info token
     session[:azure_token] = token.to_hash
     email = get_user_email token.token
     session[:user_email] = email
+    Rails.logger.info email
     @user = User.find_or_create_by(email: email)
     @user.oauth_token = token.to_hash.to_json
     @user.refresh_token = token.refresh_token
     @user.save
+    Rails.logger.info 'saved!'
     redirect_to calendar_index_url
   end
 end
