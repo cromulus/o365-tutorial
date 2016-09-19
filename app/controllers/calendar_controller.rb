@@ -50,7 +50,7 @@ class CalendarController < ApplicationController
     end
     # url = '/api/v2.0/Me/calendargroups'
     # url = '/api/v2.0/Me/Events?$orderby=Start/DateTime asc&$select=Subject,Start,End&$top=10'
-    start = (Time.current - 15.days).strftime('%FT%R')
+    start = (Time.current - 5.days).strftime('%FT%R')
     end_time = (Time.current + 120.days).strftime('%FT%R')
     url = "/api/v2.0/me/calendarview?startDateTime=#{start}&endDateTime=#{end_time}"
     #url = '/api/v2.0/me/calendars'

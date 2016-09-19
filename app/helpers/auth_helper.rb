@@ -8,6 +8,7 @@ module AuthHelper
 
   # Scopes required by the app
   SCOPES = [ 'openid',
+             'offline_access',
              'https://outlook.office.com/mail.read',
              'https://outlook.office.com/calendars.read',
              'https://outlook.office.com/contacts.read',
@@ -59,6 +60,9 @@ module AuthHelper
       # Save new token
       session[:azure_token] = new_token.to_hash
       access_token = new_token.token
+      @user.oauth_token = token.to_hash.to_json
+      @user.refresh_token = token.refresh_token
+      @user.save
     else
       access_token = token.token
     end
