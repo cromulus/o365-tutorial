@@ -8,6 +8,7 @@ gem 'puma', '~> 3.0'
 
 group :production do
   gem 'pg' # use postgres in production
+  gem 'rails_12factor'
 end
 
 # Use SCSS for stylesheets
