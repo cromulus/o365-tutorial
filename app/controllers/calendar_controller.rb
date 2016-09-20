@@ -24,9 +24,9 @@ class CalendarController < ApplicationController
     events.each do |event|
       cal.event do |e|
         start_time = Time.zone.parse(event['Start']['DateTime'])
-        end_time = Time.zone.parse(event['End']['DateTime'])
-        e.dtstart = Icalendar::Values::DateTime.new(start_time)
-        e.dtend   = Icalendar::Values::DateTime.new(end_time)
+        end_time   = Time.zone.parse(event['End']['DateTime'])
+        e.dtstart  = Icalendar::Values::DateTime.new(start_time)
+        e.dtend    = Icalendar::Values::DateTime.new(end_time)
         e.summary     = event['Subject']
         e.description = event['Subject']
       end
@@ -40,13 +40,13 @@ class CalendarController < ApplicationController
     # If a token is present in the session, get messages from the inbox
     conn = Faraday.new(url: 'https://outlook.office.com') do |faraday|
       # Outputs to the console
-      faraday.response :logger
+      # faraday.response :logger
       # Uses the default Net::HTTP adapter
       faraday.adapter  Faraday.default_adapter
     end
     # url = '/api/v2.0/Me/calendargroups'
     # url = '/api/v2.0/Me/Events?$orderby=Start/DateTime asc&$select=Subject,Start,End&$top=10'
-    start = (Time.current - 5.days).strftime('%FT%R')
+    start    = (Time.current - 5.days).strftime('%FT%R')
     end_time = (Time.current + 30.days).strftime('%FT%R')
     url = "/api/v2.0/me/calendarview?startDateTime=#{start}&endDateTime=#{end_time}&$top=50"
     while !url.nil?

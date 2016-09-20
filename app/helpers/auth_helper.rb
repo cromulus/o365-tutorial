@@ -58,7 +58,6 @@ module AuthHelper
     if token.expired?
       new_token = token.refresh!
       # Save new token
-      session[:azure_token] = new_token.to_hash
       access_token = new_token.token
       @user.oauth_token = token.to_hash.to_json
       @user.refresh_token = token.refresh_token
@@ -66,6 +65,7 @@ module AuthHelper
     else
       access_token = token.token
     end
+    return access_token
   end
 
   # Gets the user's email from the /Me endpoint
