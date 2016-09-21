@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
   def update_calendar
     token_hash = JSON.parse(oauth_token)
-    access_token = get_access_token(token_hash)
+    access_token = get_access_token(token_hash, self)
     events = get_events(access_token, email)
     self.calendar_cache = events.to_json
   end

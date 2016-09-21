@@ -39,7 +39,8 @@ module AuthHelper
   end
 
   # Gets the current access token
-  def get_access_token(token=nil)
+  def get_access_token(token=nil, user=nil)
+    @user = user.nil? ? @user : user
     unless token
       # Get the current token hash from session
       token_hash = session[:azure_token]
