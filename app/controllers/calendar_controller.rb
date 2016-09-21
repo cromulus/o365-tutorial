@@ -29,6 +29,7 @@ class CalendarController < ApplicationController
     cal = Icalendar::Calendar.new
     events.each do |event|
       cal.event do |e|
+        e.uid      = event['Id']
         start_time = Time.zone.parse(event['Start']['DateTime'])
         end_time   = Time.zone.parse(event['End']['DateTime'])
         e.dtstart  = Icalendar::Values::DateTime.new(start_time)
