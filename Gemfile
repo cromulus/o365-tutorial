@@ -6,6 +6,10 @@ gem 'rails', '~> 5.0.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 
+#run cron like tasks
+gem 'clockwork'
+gem 'sidekiq' # for background tasks
+
 group :production do
   gem 'pg' # use postgres in production
   gem 'rails_12factor'

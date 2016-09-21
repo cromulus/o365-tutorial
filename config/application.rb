@@ -17,8 +17,9 @@ module O365Tutorial
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-    config.time_zone = ENV['TZ']
+    config.time_zone = ENV['TZ'] || 'America/New_York'
     config.active_record.default_timezone = :local
+    config.active_job.queue_adapter = :sidekiq
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]

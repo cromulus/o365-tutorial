@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160728200446) do
+ActiveRecord::Schema.define(version: 20160921024118) do
 
   create_table "sessions", force: :cascade do |t|
     t.string   "session_id", null: false
@@ -25,9 +25,10 @@ ActiveRecord::Schema.define(version: 20160728200446) do
     t.string   "email"
     t.string   "oauth_token"
     t.string   "token"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.string   "refresh_token"
+    t.text     "calendar_cache"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["oauth_token"], name: "index_users_on_oauth_token", unique: true
     t.index ["token"], name: "index_users_on_token", unique: true
