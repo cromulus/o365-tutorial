@@ -33,11 +33,11 @@ class CalendarController < ApplicationController
         end
         e.summary     = event['Subject']
         e.description = event['Subject']
-        e.freebusy do |f|
-          f.dtstart = Icalendar::Values::DateTime.new(start_time)
-          f.dtend = Icalendar::Values::DateTime.new(end_time)
-          f.comment = 'Busy'
-        end if event['ShowAs'] == 'Busy'
+        # e.freebusy do |f|
+        #   f.dtstart = Icalendar::Values::DateTime.new(start_time)
+        #   f.dtend = Icalendar::Values::DateTime.new(end_time)
+        #   f.comment = 'Busy'
+        # end if event['ShowAs'] == 'Busy'
       end
     end
     cal.publish
