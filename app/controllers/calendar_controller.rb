@@ -17,15 +17,9 @@ class CalendarController < ApplicationController
   def feed
     @user = User.find_by_token(params[:token])
     redirect_to root_url unless @user
-    unless @user.calendar_cache.nil?
-      events = JSON.parse(@user.calendar_cache)
-    else
-      token_hash = JSON.parse(@user.oauth_token)
-      access_token = get_access_token(token_hash)
-      events = @user.get_events(access_token, @user.email)
-      @user.calendar_cache = events.to_json
-      @user.save
-    end
+
+
+    events = @user.get_calendar
     cal = Icalendar::Calendar.new
     events.each do |event|
       cal.event do |e|
@@ -39,6 +33,11 @@ class CalendarController < ApplicationController
         end
         e.summary     = event['Subject']
         e.description = event['Subject']
+        e.freebusy do |f|
+          f.dtstart = Icalendar::Values::DateTime.new(start_time)
+          f.dtend = Icalendar::Values::DateTime.new(end_time)
+          f.comment = 'Busy'
+        end if event['ShowAs'] == 'Busy'
       end
     end
     cal.publish
