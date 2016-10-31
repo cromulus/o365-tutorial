@@ -34,6 +34,9 @@ class CalendarController < ApplicationController
         end_time   = Time.zone.parse(event['End']['DateTime'])
         e.dtstart  = Icalendar::Values::DateTime.new(start_time)
         e.dtend    = Icalendar::Values::DateTime.new(end_time)
+        if event['Location'] && event['Location']['DisplayName']
+          e.location = event['Location']['DisplayName']
+        end
         e.summary     = event['Subject']
         e.description = event['Subject']
       end
