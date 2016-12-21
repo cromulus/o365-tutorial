@@ -8,7 +8,6 @@ gem 'puma', '~> 3.0'
 
 #run cron like tasks
 gem 'clockwork'
-gem 'sidekiq' # for background tasks
 
 group :production do
   gem 'pg' # use postgres in production
@@ -68,7 +67,7 @@ group :development, :test do
   gem 'web-console', '~> 2.0'
 end
 
-gem 'sucker_punch', '~> 2.0'
+gem 'sucker_punch', '~> 2.0' # lower memory background tasks.
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
