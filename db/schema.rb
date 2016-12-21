@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(version: 20160921024118) do
     t.string   "refresh_token"
     t.text     "calendar_cache"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["oauth_token"], name: "index_users_on_oauth_token", unique: true
     t.index ["token"], name: "index_users_on_token", unique: true
   end
 
