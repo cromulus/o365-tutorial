@@ -26,7 +26,8 @@ class CalendarController < ApplicationController
         e.uid      = event['Id']
         start_time = Time.zone.parse(event['Start']['DateTime'])
         end_time   = Time.zone.parse(event['End']['DateTime'])
-        if start_time.seconds_since_midnight == 0
+
+        if start_time.seconds_since_midnight == 0.0 # all day event
           e.dtstart  = Icalendar::Values::Date.new(start_time)
           e.dtend    = Icalendar::Values::Date.new(end_time)
         else
