@@ -26,8 +26,13 @@ class CalendarController < ApplicationController
         e.uid      = event['Id']
         start_time = Time.zone.parse(event['Start']['DateTime'])
         end_time   = Time.zone.parse(event['End']['DateTime'])
-        e.dtstart  = Icalendar::Values::DateTime.new(start_time)
-        e.dtend    = Icalendar::Values::DateTime.new(end_time)
+        if start_time.seconds_since_midnight == 0
+          e.dtstart  = Icalendar::Values::Date.new(start_time)
+          e.dtend    = Icalendar::Values::Date.new(end_time)
+        else
+          e.dtstart  = Icalendar::Values::DateTime.new(start_time)
+          e.dtend    = Icalendar::Values::DateTime.new(end_time)
+        end
         if event['Location'] && event['Location']['DisplayName']
           e.location = event['Location']['DisplayName']
         end
