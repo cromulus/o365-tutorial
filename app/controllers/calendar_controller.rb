@@ -19,14 +19,13 @@ class CalendarController < ApplicationController
     @user = User.find_by_token(params[:token])
     redirect_to root_url unless @user
 
-
     events = @user.get_calendar
 
     cal = Icalendar::Calendar.new
 
-    tzid = "America/NewYork"
+    tzid = "America/New_York"
     tz = TZInfo::Timezone.get tzid
-    timezone = tz.ical_timezone event_start
+    timezone = tz.ical_timezone Time.zone.now
     cal.add_timezone timezone
 
     events.each do |event|
