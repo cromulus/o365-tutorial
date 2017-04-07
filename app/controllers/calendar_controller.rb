@@ -35,11 +35,11 @@ class CalendarController < ApplicationController
         end_time   = Time.zone.parse(event['End']['DateTime'])
 
         if start_time.seconds_since_midnight == 0.0 # all day event
-          e.dtstart  = Icalendar::Values::Date.new(start_time)
-          e.dtend    = Icalendar::Values::Date.new(end_time)
+          e.dtstart  = Icalendar::Values::Date.new(start_time,'tzid' => tzid)
+          e.dtend    = Icalendar::Values::Date.new(end_time,'tzid' => tzid)
         else
-          e.dtstart  = Icalendar::Values::DateTime.new(start_time)
-          e.dtend    = Icalendar::Values::DateTime.new(end_time)
+          e.dtstart  = Icalendar::Values::DateTime.new(start_time,'tzid' => tzid)
+          e.dtend    = Icalendar::Values::DateTime.new(end_time,'tzid' => tzid)
         end
         if event['Location'] && event['Location']['DisplayName']
           e.location = event['Location']['DisplayName']
@@ -56,6 +56,5 @@ class CalendarController < ApplicationController
     cal.publish
     render text: cal.to_ical
   end
-
 
 end
