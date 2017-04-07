@@ -31,6 +31,7 @@ class CalendarController < ApplicationController
     events.each do |event|
       cal.event do |e|
         e.uid      = event['Id']
+        e.x_wr_timezone = tzid
         start_time = DateTime.parse(event['Start']['DateTime'])
         end_time   = DateTime.parse(event['End']['DateTime'])
 
