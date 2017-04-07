@@ -23,7 +23,7 @@ class CalendarController < ApplicationController
 
     cal = Icalendar::Calendar.new
 
-    tzid = "America/New_York"
+    tzid = ENV['TZ']
     tz = TZInfo::Timezone.get tzid
     timezone = tz.ical_timezone Time.zone.now
     cal.add_timezone timezone

@@ -42,13 +42,13 @@ class User < ActiveRecord::Base
         # Sort by Start in ascending orderby
         # Get the first 50 results
         request.url url
-        request.headers['Prefer'] = 'outlook.timezone="Eastern Standard Time"'
+        request.headers['Prefer'] = "outlook.timezone=\"#{ENV['TZ']}\""
         request.headers['Authorization'] = "Bearer #{oauth_token}"
         request.headers['Accept'] = 'application/json'
         request.headers['X-AnchorMailbox'] = email
       end
-      res  = JSON.parse(response.body)
-      url = res["@odata.nextLink"] # is nil if there is no more to fetch
+      res = JSON.parse(response.body)
+      url = res['@odata.nextLink'] # is nil if there is no more to fetch
       events += res['value']
     end
     events
