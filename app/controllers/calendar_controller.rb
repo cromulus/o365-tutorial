@@ -1,3 +1,4 @@
+require 'icalendar/tzinfo'
 class CalendarController < ApplicationController
 
   include AuthHelper
@@ -20,7 +21,14 @@ class CalendarController < ApplicationController
 
 
     events = @user.get_calendar
+
     cal = Icalendar::Calendar.new
+
+    tzid = "America/NewYork"
+    tz = TZInfo::Timezone.get tzid
+    timezone = tz.ical_timezone event_start
+    cal.add_timezone timezone
+
     events.each do |event|
       cal.event do |e|
         e.uid      = event['Id']

@@ -45,6 +45,7 @@ gem 'has_secure_token'
 
 # for ical fun
 gem 'icalendar'
+gem 'tzinfo'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
