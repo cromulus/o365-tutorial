@@ -31,15 +31,15 @@ class CalendarController < ApplicationController
     events.each do |event|
       cal.event do |e|
         e.uid      = event['Id']
-        start_time = Time.zone.parse(event['Start']['DateTime'])
-        end_time   = Time.zone.parse(event['End']['DateTime'])
+        start_time = DateTime.parse(event['Start']['DateTime'])
+        end_time   = DateTime.parse(event['End']['DateTime'])
 
         if start_time.seconds_since_midnight == 0.0 # all day event
-          e.dtstart  = Icalendar::Values::Date.new(start_time,'tzid' => tzid)
-          e.dtend    = Icalendar::Values::Date.new(end_time,'tzid' => tzid)
+          e.dtstart  = Icalendar::Values::Date.new(start_time, 'tzid' => tzid)
+          e.dtend    = Icalendar::Values::Date.new(end_time, 'tzid' => tzid)
         else
-          e.dtstart  = Icalendar::Values::DateTime.new(start_time,'tzid' => tzid)
-          e.dtend    = Icalendar::Values::DateTime.new(end_time,'tzid' => tzid)
+          e.dtstart  = Icalendar::Values::DateTime.new(start_time, 'tzid' => tzid)
+          e.dtend    = Icalendar::Values::DateTime.new(end_time, 'tzid' => tzid)
         end
         if event['Location'] && event['Location']['DisplayName']
           e.location = event['Location']['DisplayName']
