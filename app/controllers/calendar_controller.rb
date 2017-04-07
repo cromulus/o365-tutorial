@@ -27,6 +27,7 @@ class CalendarController < ApplicationController
     tz = TZInfo::Timezone.get tzid
     timezone = tz.ical_timezone Time.zone.now
     cal.add_timezone timezone
+    cal.x_wr_timezone = tzid
 
     events.each do |event|
       cal.event do |e|
