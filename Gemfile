@@ -9,7 +9,7 @@ gem 'puma', '~> 3.0'
 #run cron like tasks
 gem 'clockwork'
 
-gem 'airbrake'
+gem 'airbrake', '~> 5.0'
 
 group :production do
   gem 'pg' # use postgres in production

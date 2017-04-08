@@ -200,7 +200,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-session_store
-  airbrake
+  airbrake (~> 5.0)
   bcrypt (~> 3.1.7)
   byebug
   clockwork
