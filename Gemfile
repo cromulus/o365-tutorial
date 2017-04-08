@@ -9,6 +9,8 @@ gem 'puma', '~> 3.0'
 #run cron like tasks
 gem 'clockwork'
 
+gem 'airbrake'
+
 group :production do
   gem 'pg' # use postgres in production
   gem 'rails_12factor'
