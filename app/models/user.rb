@@ -42,6 +42,8 @@ class User < ActiveRecord::Base
         # Sort by Start in ascending orderby
         # Get the first 50 results
         request.url url
+        request.options[:timeout] = 30
+        request.options[:open_timeout] = 30
         request.headers['Prefer'] = "outlook.timezone=\"#{ENV['TZ']}\""
         request.headers['Authorization'] = "Bearer #{oauth_token}"
         request.headers['Accept'] = 'application/json'
