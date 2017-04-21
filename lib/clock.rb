@@ -7,7 +7,7 @@ module Clockwork
     puts "Running #{job} at #{time}"
   end
 
-  every(10.minutes, 'calendars.update_calendar') do
+  every(60.minutes, 'calendars.update_calendar') do
     UpdateCalendarsJob.perform_later
   end
 end

@@ -22,6 +22,12 @@ class User < ActiveRecord::Base
     self.calendar_cache = events.to_json
   end
 
+  def background_calendar_update
+    if (Time.now - updated_at) > 5.minutes.to_i
+      UserCalendarUpdateJob.perform_later(id)
+    end
+  end
+
   def get_events(oauth_token, email)
     events = []
     # If a token is present in the session, get messages from the inbox

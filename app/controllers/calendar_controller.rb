@@ -19,6 +19,7 @@ class CalendarController < ApplicationController
     @user = User.find_by_token(params[:token])
     redirect_to root_url unless @user
 
+
     events = @user.get_calendar
 
     cal = Icalendar::Calendar.new
@@ -56,6 +57,8 @@ class CalendarController < ApplicationController
       end
     end
     cal.publish
+
+    @user.background_calendar_update # update as often as the user wants it.
     render text: cal.to_ical
   end
 
