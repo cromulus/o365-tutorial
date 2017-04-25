@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   end
 
   def background_calendar_update
-    if (Time.now - updated_at) > 5.minutes.to_i
+    if (updated_at - Time.now) > 5.minutes.to_i
       UserCalendarUpdateJob.perform_later(id)
     end
   end
