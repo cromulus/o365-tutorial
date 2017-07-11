@@ -8,5 +8,6 @@ Rails.application.routes.draw do
 
   root 'application#home'
   get 'authorize' => 'auth#gettoken'
+  get 'refresh/:token', to: 'auth#refresh', as: :refresh_path
   get '/check.txt', to: proc { [200, {}, ['simple_check']] }
 end

@@ -15,11 +15,19 @@ class User < ActiveRecord::Base
   has_secure_token
   include AuthHelper
 
-  def update_calendar
-    token_hash = JSON.parse(oauth_token)
-    access_token = get_access_token(token_hash, self)
-    events = get_events(access_token, email)
-    self.calendar_cache = events.to_json
+  def update_calendar #TODO email user on failure
+    begin
+      token_hash = JSON.parse(oauth_token)
+      access_token = get_access_token(token_hash, self)
+      events = get_events(access_token, email)
+      self.calendar_cache = events.to_json
+    rescue Exception => e
+      if e['error'] == "invalid_grant"
+        token_active = false
+        if user.notified == false
+          UserNotifier.invalid_token(@user).deliver
+        end
+    end
   end
 
   def background_calendar_update

@@ -10,27 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160921024118) do
-
-  create_table "sessions", force: :cascade do |t|
-    t.string   "session_id", null: false
-    t.text     "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
-    t.index ["updated_at"], name: "index_sessions_on_updated_at"
+ActiveRecord::Schema.define(version: 20_170_711_190_153) do
+  create_table 'sessions', force: :cascade do |t|
+    t.string   'session_id', null: false
+    t.text     'data'
+    t.datetime 'created_at'
+    t.datetime 'updated_at'
+    t.index ['session_id'], name: 'index_sessions_on_session_id', unique: true
+    t.index ['updated_at'], name: 'index_sessions_on_updated_at'
   end
 
-  create_table "users", force: :cascade do |t|
-    t.string   "email"
-    t.string   "oauth_token"
-    t.string   "token"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.string   "refresh_token"
-    t.text     "calendar_cache"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["token"], name: "index_users_on_token", unique: true
+  create_table 'users', force: :cascade do |t|
+    t.string   'email'
+    t.string   'oauth_token'
+    t.string   'token'
+    t.datetime 'created_at',                            null: false
+    t.datetime 'updated_at',                            null: false
+    t.string   'refresh_token'
+    t.text     'calendar_cache'
+    t.boolean  'token_active',          default: true
+    t.boolean  'inactive_notification', default: false
+    t.datetime 'notified_at'
+    t.index ['email'], name: 'index_users_on_email', unique: true
+    t.index ['token'], name: 'index_users_on_token', unique: true
   end
-
 end

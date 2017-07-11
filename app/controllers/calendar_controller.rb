@@ -1,6 +1,5 @@
 require 'icalendar/tzinfo'
 class CalendarController < ApplicationController
-
   include AuthHelper
 
   def index
@@ -19,7 +18,6 @@ class CalendarController < ApplicationController
     @user = User.find_by_token(params[:token])
     redirect_to root_url unless @user
 
-
     events = @user.get_calendar
 
     cal = Icalendar::Calendar.new
@@ -32,7 +30,7 @@ class CalendarController < ApplicationController
 
     events.each do |event|
       cal.event do |e|
-        e.uid      = event['Id']
+        e.uid = event['Id']
         e.x_wr_timezone = tzid
         start_time = DateTime.parse(event['Start']['DateTime'])
         end_time   = DateTime.parse(event['End']['DateTime'])
@@ -61,5 +59,4 @@ class CalendarController < ApplicationController
     @user.background_calendar_update # update as often as the user wants it.
     render text: cal.to_ical
   end
-
 end

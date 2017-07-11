@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   def home
     # Display the login link.
-    Rails.logger.info "showing login link"
+    Rails.logger.info 'showing login link'
     login_url = get_login_url
     render html: "<a href='#{login_url}'>Log in</a>".html_safe
   end

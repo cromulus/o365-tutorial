@@ -1,1 +1,1 @@
- SuckerPunch.shutdown_timeout = 512
+SuckerPunch.shutdown_timeout = 512

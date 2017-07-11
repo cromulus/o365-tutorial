@@ -1,6 +1,7 @@
 # Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
 class AuthController < ApplicationController
-# this is an access token. We should replace it with a refresh token
+  include AuthHelper
+  # this is an access token. We should replace it with a refresh token
   def gettoken
     token = get_token_from_code params[:code]
     Rails.logger.info token
@@ -11,9 +12,19 @@ class AuthController < ApplicationController
     @user = User.find_or_create_by(email: email)
     @user.oauth_token = token.to_hash.to_json
     @user.refresh_token = token.refresh_token
+    @user.toke_active = true
     @user.save
     Rails.logger.info 'saved!'
     redirect_to calendar_index_url
+  end
+
+  def refresh
+    @user = User.find_by(token: params[:token])
+    redirect_to root_url unless @user
+    @user.notified = false
+    @user.notified_at = nil
+    @user.save
+    redirect_to get_login_url
   end
 end
 

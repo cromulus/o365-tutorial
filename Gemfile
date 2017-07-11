@@ -6,7 +6,7 @@ gem 'rails', '~> 5.0.0'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 
-#run cron like tasks
+# run cron like tasks
 gem 'clockwork'
 
 gem 'airbrake', '~> 5.0'
@@ -25,9 +25,9 @@ gem 'coffee-rails', '~> 4.2'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
-gem 'oauth2'
 gem 'activerecord-session_store'
 gem 'faraday'
+gem 'oauth2'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -73,4 +73,4 @@ end
 gem 'sucker_punch', '~> 2.0' # lower memory background tasks.
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
