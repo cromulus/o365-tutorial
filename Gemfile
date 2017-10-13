@@ -28,7 +28,7 @@ gem 'dalli'
 gem 'activerecord-session_store'
 gem 'faraday'
 gem 'oauth2'
-
+gem 'rack-cache'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
