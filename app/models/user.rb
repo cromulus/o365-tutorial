@@ -11,23 +11,25 @@
 #  refresh_token :string
 #
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   has_secure_token
   include AuthHelper
 
-  def update_calendar #TODO email user on failure
+  def update_calendar
     begin
       token_hash = JSON.parse(oauth_token)
       access_token = get_access_token(token_hash, self)
       events = get_events(access_token, email)
       self.calendar_cache = events.to_json
-    rescue Exception => e
-      if e['error'] == "invalid_grant"
-        token_active = false
-        if user.notified == false
-          UserNotifier.invalid_token(@user).deliver
-        end
+    rescue OAuth2::Error => e
+      if e.code == 'invalid_grant'
+        self.token_active = false
+        UserNotifier.invalid_token(self).deliver if notified == false
+        save
+      end
+      false
     end
+    true
   end
 
   def background_calendar_update
@@ -50,7 +52,7 @@ class User < ActiveRecord::Base
     start    = (Time.current - 5.days).strftime('%FT%R')
     end_time = (Time.current + 365.days).strftime('%FT%R')
     url = "/api/v2.0/me/calendarview?startDateTime=#{start}&endDateTime=#{end_time}&$top=50"
-    while !url.nil?
+    until url.nil?
       response = conn.get do |request|
         # Get events from the calendar
         # Sort by Start in ascending orderby

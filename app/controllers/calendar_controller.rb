@@ -6,7 +6,7 @@ class CalendarController < ApplicationController
     oauth_token = get_access_token
     email = session[:user_email]
     if oauth_token
-      @user = User.find_by_email(email)
+      @user = User.find_by(email: email)
     else
       # If no token, redirect to the root url so user
       # can sign in.
@@ -15,7 +15,7 @@ class CalendarController < ApplicationController
   end
 
   def feed
-    @user = User.find_by_token(params[:token])
+    @user = User.find_by(token: params[:token])
     redirect_to root_url unless @user
 
     events = @user.get_calendar
