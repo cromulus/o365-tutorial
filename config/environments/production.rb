@@ -56,8 +56,8 @@ Rails.application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
   # Use a different cache store in production.
-  config.cache_store = :mem_cache_store
-
+  #config.cache_store = :mem_cache_store
+  config.cache_store = :dalli_store, ENV['MEMCACHED_URL']
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     address:              ENV['SMTP_SERVER'],
