@@ -6,7 +6,6 @@ class UserNotifierMailer < ApplicationMailer
     email_body += "\n"
     email_body += "remember, your login is name@rhnyc.net and your password!\n"
     email_body += 'pester Bill with questions'
-    user.notified = true
     user.notified_at = Time.zone.now
     user.save
     mail(to: user.email,

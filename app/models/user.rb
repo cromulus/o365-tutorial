@@ -24,7 +24,7 @@ class User < ApplicationRecord
     rescue OAuth2::Error => e
       if e.code == 'invalid_grant'
         self.token_active = false
-        UserNotifier.invalid_token(self).deliver if notified == false
+        UserNotifier.invalid_token(self).deliver if self.notified_at.nil?
         save
       end
       false

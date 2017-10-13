@@ -61,8 +61,10 @@ module AuthHelper
       access_token = new_token.token
       @user.oauth_token = token.to_hash.to_json
       @user.refresh_token = token.refresh_token
+      @user.notified_at = nil
       @user.save
     else
+      @user.notified_at = nil
       access_token = token.token
     end
     access_token
