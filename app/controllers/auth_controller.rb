@@ -12,7 +12,7 @@ class AuthController < ApplicationController
     @user = User.find_or_create_by(email: email)
     @user.oauth_token = token.to_hash.to_json
     @user.refresh_token = token.refresh_token
-    @user.toke_active = true
+    @user.token_active = true
     @user.save
     Rails.logger.info 'saved!'
     redirect_to calendar_index_url
