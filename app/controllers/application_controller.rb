@@ -4,13 +4,6 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   include AuthHelper
-
-  def home
-    # Display the login link.
-    Rails.logger.info 'showing login link'
-    login_url = get_login_url
-    render html: "<a href='#{login_url}'>Log in</a>".html_safe
-  end
 end
 
 # MIT License:

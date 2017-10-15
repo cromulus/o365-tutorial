@@ -64,7 +64,7 @@ module AuthHelper
       @user.notified_at = nil
       @user.save
     else
-      @user.notified_at = nil
+      @user.notified_at = nil unless @user.nil?
       access_token = token.token
     end
     access_token
