@@ -29,8 +29,7 @@ class AuthController < ApplicationController
 
   def home
     Rails.logger.info 'showing login link'
-    login_url = get_login_url
-    render html: "<a href='#{login_url}'>Log in</a>".html_safe
+    @login_url = get_login_url
   end
 end
 
