@@ -6,12 +6,14 @@ class UserNotifierMailer < ApplicationMailer
     email_body += "\n"
     email_body += "remember, your login is name@rhnyc.net and your password!\n"
     email_body += 'pester Bill with questions'
-    user.notified_at = Time.zone.now
-    user.save
+
     mail(to: user.email,
          body: email_body,
          from: ENV['SMTP_USER'],
          content_type: 'text/html',
          subject: 'Update your calendar feed!')
+    user.inactive_notification = true
+    user.notified_at = Time.zone.now
+    user.save
   end
 end

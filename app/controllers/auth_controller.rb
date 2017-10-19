@@ -21,7 +21,7 @@ class AuthController < ApplicationController
   def refresh
     @user = User.find_by(token: params[:token])
     redirect_to root_url unless @user
-    @user.notified = false
+    @user.inactive_notification = false
     @user.notified_at = nil
     @user.save
     redirect_to get_login_url
