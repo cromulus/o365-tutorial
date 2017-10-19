@@ -10,7 +10,7 @@ class UserNotifierMailer < ApplicationMailer
     user.save
     mail(to: user.email,
          body: email_body,
-         from: ENV['SMTP_USERNAME'],
+         from: ENV['SMTP_USER'],
          content_type: 'text/html',
          subject: 'Update your calendar feed!')
   end
