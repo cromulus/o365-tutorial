@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 ruby '2.4.3'
 
-gem 'pg' # use postgres in production
 gem 'rails', '~> 5.0.0'
 
 # Use Puma as the app server
@@ -13,6 +12,7 @@ gem 'clockwork'
 gem 'airbrake', '~> 5.0'
 
 group :production do  
+  gem 'pg', '~> 0.18'
   gem 'rails_12factor'
 end
 
