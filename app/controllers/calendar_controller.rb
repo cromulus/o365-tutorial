@@ -42,11 +42,23 @@ class CalendarController < ApplicationController
           e.dtstart  = Icalendar::Values::DateTime.new(start_time, 'tzid' => tzid)
           e.dtend    = Icalendar::Values::DateTime.new(end_time, 'tzid' => tzid)
         end
-        if event['Location'] && event['Location']['DisplayName']
-          e.location = event['Location']['DisplayName']
+        if event['Location'].present? && event['Location']['DisplayName'].present?
+          display_name = event['Location']['DisplayName']
+          address = event['Location']['Address'].values.join(" ") rescue ''
+          e.location = display_name + address
         end
         e.summary     = event['Subject']
-        e.description = event['Subject']
+        body_content  = event.dig('Body', 'Content')
+        e.description = ActionView::Base.full_sanitizer.sanitize(body_content) if body_content.present?
+
+        if event.dig('Location', 'Coordinates').present?
+          e.lattitude = event['Location']['Coordinates']['Lattitude']
+          e.longitude = event['Location']['Coordinates']['Longitude']
+        end
+
+        if event['Organizer'].present?
+          e.organizer = event.dig('Organizer','Address')
+        end
         # e.freebusy do |f|
         #   f.dtstart = Icalendar::Values::DateTime.new(start_time)
         #   f.dtend = Icalendar::Values::DateTime.new(end_time)
