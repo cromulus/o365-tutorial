@@ -48,10 +48,10 @@ class CalendarController < ApplicationController
           e.location = display_name + address
         end
 
-        if event.dig('Location', 'Coordinates').present?
-          e.lattitude = event['Location']['Coordinates']['Lattitude']
-          e.longitude = event['Location']['Coordinates']['Longitude']
-        end
+        # if event.dig('Location', 'Coordinates').present?
+        #   e.lattitude = event['Location']['Coordinates']['Lattitude']
+        #   e.longitude = event['Location']['Coordinates']['Longitude']
+        # end
 
         if event['Organizer'].present?
           e.organizer = event.dig('Organizer','Address')
