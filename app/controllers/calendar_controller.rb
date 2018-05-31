@@ -66,7 +66,7 @@ class CalendarController < ApplicationController
           full_body = body_content
         end
 
-        e.description = ActionView::Base.full_sanitizer.sanitize(full_body)
+        e.description = ActionView::Base.full_sanitizer.sanitize(full_body).gsub(/\s+/,' ')
         # e.freebusy do |f|
         #   f.dtstart = Icalendar::Values::DateTime.new(start_time)
         #   f.dtend = Icalendar::Values::DateTime.new(end_time)
