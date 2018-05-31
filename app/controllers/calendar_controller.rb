@@ -44,7 +44,7 @@ class CalendarController < ApplicationController
         end
         if event['Location'].present? && event.dig('Location','DisplayName').present?
           display_name = event['Location']['DisplayName']
-          address = event['Location']['Address'].values.join(" ") rescue ''
+          address = event['Location']['Address'].values.join(" ").gsub('Unknown','') rescue ''
           e.location = display_name + address
         end
 
