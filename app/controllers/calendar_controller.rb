@@ -65,7 +65,7 @@ class CalendarController < ApplicationController
         else
           full_body = body_content
         end
-
+        e.status = 'CONFIRMED'
         e.description = ActionView::Base.full_sanitizer.sanitize(full_body).gsub(/\s+/,' ')
         # e.freebusy do |f|
         #   f.dtstart = Icalendar::Values::DateTime.new(start_time)
