@@ -49,7 +49,7 @@ class User < ApplicationRecord
     end
     # url = '/api/v2.0/Me/calendargroups'
     # url = '/api/v2.0/Me/Events?$orderby=Start/DateTime asc&$select=Subject,Start,End&$top=10'
-    start    = (Time.current - 5.days).strftime('%FT%R')
+    start    = (Time.current - 180.days).strftime('%FT%R')
     end_time = (Time.current + 365.days).strftime('%FT%R')
     url = "/api/v2.0/me/calendarview?startDateTime=#{start}&endDateTime=#{end_time}&$top=50"
     until url.nil?

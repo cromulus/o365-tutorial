@@ -10,5 +10,6 @@ class UserCalendarUpdateJob < ApplicationJob
     else
       Rails.logger.info("Calendar Update: token expired for #{user_id}")
     end
+    true
   end
 end

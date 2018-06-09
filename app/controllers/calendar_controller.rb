@@ -74,7 +74,7 @@ class CalendarController < ApplicationController
         # end if event['ShowAs'] == 'Busy'
       end
     end
-    cal.publish
+    cal.publish # should cache this too, possibly in the user model with a ttl
 
     @user.background_calendar_update # update as often as the user wants it.
     render text: cal.to_ical
